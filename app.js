@@ -10,7 +10,11 @@ const strings = {
     brand: '부산 <b>편의지도</b>', placeholder: '카페, 화장실, 주차장 등 장소를 검색하세요', search: '검색',
     tag: '부산 생활편의 맞춤 지도', hero: '지금 필요한 곳을<br>10초 안에 찾으세요',
     sub: '맛집 순위보다 내 상황에 맞는 화장실·주차장·약국·반려동물 동반 장소를 빠르게 찾아드려요.',
-    quickTitle: '상황별 빠른 찾기', locate: '⌖ 내 위치 정보 찾기', initial: '위치를 찾은 뒤 검색어를 입력해 주세요.',
+    quickTitle: '지금 필요한 곳 빠르게 찾기', quickHint: '버튼을 누르면 선택한 반경에서 바로 검색합니다.',
+    essentialTitle: '생활 필수', essentialHint: '화장실·주차장·약국처럼 급할 때 필요한 시설',
+    lifestyleTitle: '상황 맞춤', lifestyleHint: '반려견 동반과 늦은 시간에 맞는 장소',
+    tourTitle: '여행·관광', tourHint: '현재 위치에서 가까운 부산 대표 명소',
+    locate: '⌖ 내 위치 정보 찾기', initial: '위치를 찾은 뒤 검색어를 입력해 주세요.',
     recommendTitle: '지금 가장 가까운 추천', recommendBadge: '거리 기준 TOP 3', touristRecommendTitle: '근처 대표 관광지 추천', touristRecommendBadge: '부산 명소 TOP 3',
     infoSmall: '장소 검색', infoTitle: '검색 결과를 선택해 주세요', infoText: '위치 확인 후 원하는 시설을 검색하세요.',
     reviewTitle: '이 장소 리뷰', name: '이름', namePlaceholder: '리뷰에 표시할 이름', rating: '별점',
@@ -46,7 +50,11 @@ const strings = {
     brand: 'Busan <b>Convenience Map</b>', placeholder: 'Search cafés, restrooms, parking and more', search: 'Search',
     tag: 'Busan local convenience guide', hero: 'Find what you need<br>in just 10 seconds',
     sub: 'Quickly find restrooms, parking, pharmacies, pet-friendly places and other facilities that fit your situation.',
-    quickTitle: 'Quick search by situation', locate: '⌖ Use my location', initial: 'Set your location, then choose or enter a search.',
+    quickTitle: 'Find what you need now', quickHint: 'Tap an option to search the selected radius right away.',
+    essentialTitle: 'Everyday essentials', essentialHint: 'Restrooms, parking and pharmacies when you need them',
+    lifestyleTitle: 'Lifestyle', lifestyleHint: 'Pet-friendly places and late-night essentials',
+    tourTitle: 'Travel & sightseeing', tourHint: 'Popular Busan attractions near your current location',
+    locate: '⌖ Use my location', initial: 'Set your location, then choose or enter a search.',
     recommendTitle: 'Closest recommendations', recommendBadge: 'DISTANCE TOP 3', touristRecommendTitle: 'Top attractions nearby', touristRecommendBadge: 'BUSAN HIGHLIGHTS',
     infoSmall: 'Place search', infoTitle: 'Choose a search result', infoText: 'Search for a facility and select a place.',
     reviewTitle: 'Reviews for this place', name: 'Name', namePlaceholder: 'Name shown with your review', rating: 'Rating',
@@ -81,7 +89,11 @@ const strings = {
     brand: '釜山 <b>便利マップ</b>', placeholder: 'カフェ・トイレ・駐車場などを検索', search: '検索',
     tag: '釜山の生活便利ガイド', hero: '今必要な場所を<br>10秒で見つけよう',
     sub: 'トイレ、駐車場、薬局、ペット同伴施設など、状況に合う場所をすぐに探せます。',
-    quickTitle: '目的からすぐ探す', locate: '⌖ 現在地を取得', initial: '現在地を設定して検索してください。',
+    quickTitle: '今必要な場所をすぐ検索', quickHint: '項目をタップすると、選択した範囲ですぐに検索します。',
+    essentialTitle: '生活に必要', essentialHint: 'トイレ・駐車場・薬局など、急な時に役立つ施設',
+    lifestyleTitle: 'シーン別', lifestyleHint: 'ペット同伴や深夜利用に合う場所',
+    tourTitle: '旅行・観光', tourHint: '現在地の近くにある釜山の観光スポット',
+    locate: '⌖ 現在地を取得', initial: '現在地を設定して検索してください。',
     recommendTitle: '今一番近いおすすめ', recommendBadge: '距離 TOP 3', touristRecommendTitle: '近くの代表観光地', touristRecommendBadge: '釜山名所 TOP 3',
     infoSmall: '場所検索', infoTitle: '検索結果を選択', infoText: '施設を検索して場所を選んでください。',
     reviewTitle: 'この場所のレビュー', name: '名前', namePlaceholder: 'レビューに表示する名前', rating: '評価',
@@ -117,7 +129,11 @@ const strings = {
     brand: '釜山<b>便利地图</b>', placeholder: '搜索咖啡厅、洗手间、停车场等', search: '搜索',
     tag: '釜山生活便利指南', hero: '10秒找到<br>现在需要的地方',
     sub: '快速查找适合您的洗手间、停车场、药店、宠物友好场所及其他便利设施。',
-    quickTitle: '按需求快速查找', locate: '⌖ 获取我的位置', initial: '请先设置位置，然后选择或输入搜索内容。',
+    quickTitle: '快速查找现在需要的地点', quickHint: '点击选项即可在所选范围内立即搜索。',
+    essentialTitle: '生活必需', essentialHint: '洗手间、停车场、药店等应急设施',
+    lifestyleTitle: '场景需求', lifestyleHint: '适合携带宠物或深夜使用的地点',
+    tourTitle: '旅行与观光', tourHint: '当前位置附近的釜山热门景点',
+    locate: '⌖ 获取我的位置', initial: '请先设置位置，然后选择或输入搜索内容。',
     recommendTitle: '距离最近的推荐', recommendBadge: '距离 TOP 3', touristRecommendTitle: '附近代表景点推荐', touristRecommendBadge: '釜山景点 TOP 3',
     infoSmall: '地点搜索', infoTitle: '请选择搜索结果', infoText: '搜索设施并选择地点。',
     reviewTitle: '该地点的评论', name: '姓名', namePlaceholder: '评论中显示的姓名', rating: '评分',
@@ -226,6 +242,7 @@ let expanded = false;
 let allResults = [];
 let lastQuery = '';
 let markers = L.layerGroup().addTo(map);
+let markerByPlaceKey = new Map();
 let circle = null;
 let roadviewSdkPromise = null;
 let roadviewInstance = null;
@@ -255,16 +272,18 @@ const escape = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[char]));
 const normalizedPlaceName = (name) => String(name || '').replace(/[\s·\-()]/g, '').toLowerCase();
+const placeKey = (place) => String(place?.id || `${place?.lat},${place?.lng}`);
+const isSelectedPlace = (place) => Boolean(selected) && placeKey(place) === placeKey(selected);
 const featuredTouristGroup = (place) => featuredTouristNames.find((name) =>
   normalizedPlaceName(place.name).includes(normalizedPlaceName(name))
 ) || '';
 
-function markerIcon(place, recommended = false) {
+function markerIcon(place, recommended = false, isSelected = false) {
   const category = place.category || '';
   const emoji = category.includes('관광명소') ? '📸' : category.includes('카페') ? '☕' : '📍';
   return L.divIcon({
     className: '',
-    html: `<div class="facility${recommended ? ' recommended' : ''}"><span>${emoji}</span></div>`,
+    html: `<div class="facility${recommended ? ' recommended' : ''}${isSelected ? ' selected' : ''}"><span>${emoji}</span></div>`,
     iconSize: [34, 34],
     iconAnchor: [17, 34]
   });
@@ -478,8 +497,61 @@ async function openRoadview() {
   }
 }
 
+function collapsedResultPlaces() {
+  const firstPlaces = allResults.slice(0, 4);
+  if (!selected || firstPlaces.some(isSelectedPlace)) return firstPlaces;
+  const selectedResult = allResults.find(isSelectedPlace);
+  return selectedResult ? [...allResults.slice(0, 3), selectedResult] : firstPlaces;
+}
+
+function visibleResultPlaces() {
+  return expanded ? allResults : collapsedResultPlaces();
+}
+
+function renderResultList() {
+  const shown = visibleResultPlaces();
+  $('#results').classList.toggle('expanded', expanded);
+  $('#results').innerHTML = shown.length
+    ? shown.map((place) => {
+      const current = isSelectedPlace(place);
+      return `<li><button data-place-key="${escape(placeKey(place))}"${current ? ' class="is-selected" aria-current="true"' : ''}><b>📍 ${escape(place.name)}</b><b>${fmt(distance(place))}</b><small>${escape(place.category || t('infoSmall'))} · ${escape(place.address)}</small></button></li>`;
+    }).join('')
+    : `<li>${t('noResults')}</li>`;
+  document.querySelectorAll('#results [data-place-key]').forEach((button) => {
+    button.onclick = () => {
+      const place = allResults.find((item) => placeKey(item) === button.dataset.placeKey);
+      if (place) choose(place);
+    };
+  });
+}
+
+function syncSelectionUi(ensureVisible = false) {
+  const currentKey = selected ? placeKey(selected) : '';
+  let resultButtons = Array.from(document.querySelectorAll('#results [data-place-key]'));
+  if (ensureVisible && currentKey && !resultButtons.some((button) => button.dataset.placeKey === currentKey)) {
+    renderResultList();
+    resultButtons = Array.from(document.querySelectorAll('#results [data-place-key]'));
+  }
+  resultButtons.forEach((button) => {
+    const current = button.dataset.placeKey === currentKey;
+    button.classList.toggle('is-selected', current);
+    if (current) button.setAttribute('aria-current', 'true');
+    else button.removeAttribute('aria-current');
+  });
+  markerByPlaceKey.forEach(({ marker, place, recommended }) => {
+    const current = isSelectedPlace(place);
+    marker.setIcon(markerIcon(place, recommended, current));
+    marker.setZIndexOffset(current ? 1000 : recommended ? 500 : 0);
+  });
+  const selectedButton = resultButtons.find((button) => button.dataset.placeKey === currentKey);
+  if (ensureVisible && selectedButton && !window.matchMedia('(max-width: 720px)').matches) {
+    selectedButton.scrollIntoView({ block: 'nearest' });
+  }
+}
+
 function choose(place, focus = true, revealOnMobile = false) {
   selected = place;
+  syncSelectionUi(true);
   const km = distance(place);
   const minutes = Math.max(1, Math.round(km * 12));
   const detailUrl = escape((place.url || '').replace(/^http:/, 'https:'));
@@ -536,22 +608,20 @@ function renderRecommendations() {
 
 function renderResults() {
   markers.clearLayers();
-  const shown = expanded ? allResults : allResults.slice(0, 4);
+  markerByPlaceKey.clear();
   const recommendedPlaces = new Set(recommendationPlaces());
   renderRecommendations();
-  $('#results').classList.toggle('expanded', expanded);
-  $('#results').innerHTML = shown.length
-    ? shown.map((place, index) => `<li><button data-i="${index}"><b>📍 ${escape(place.name)}</b><b>${fmt(distance(place))}</b><small>${escape(place.category || t('infoSmall'))} · ${escape(place.address)}</small></button></li>`).join('')
-    : `<li>${t('noResults')}</li>`;
+  renderResultList();
   allResults.forEach((place) => {
     const recommended = recommendedPlaces.has(place);
-    L.marker([place.lat, place.lng], { icon: markerIcon(place, recommended) })
+    const marker = L.marker([place.lat, place.lng], {
+      icon: markerIcon(place, recommended, isSelectedPlace(place)),
+      zIndexOffset: isSelectedPlace(place) ? 1000 : recommended ? 500 : 0
+    })
       .addTo(markers)
       .bindTooltip(`${recommended ? t('recommended') : ''}${place.name}`, { direction: 'top' })
       .on('click', () => choose(place, false, true));
-  });
-  document.querySelectorAll('[data-i]').forEach((button) => {
-    button.onclick = () => choose(shown[Number(button.dataset.i)]);
+    markerByPlaceKey.set(placeKey(place), { marker, place, recommended });
   });
   $('#more').hidden = allResults.length <= 4;
   $('#more').textContent = expanded ? t('collapse') : t('more', { count: allResults.length - 4 });
@@ -619,6 +689,13 @@ function applyLanguage() {
   $('#heroTitle').innerHTML = s.hero;
   $('#heroSub').textContent = s.sub;
   $('#quickTitle').textContent = s.quickTitle;
+  $('#quickHint').textContent = s.quickHint;
+  $('#essentialTitle').textContent = s.essentialTitle;
+  $('#essentialHint').textContent = s.essentialHint;
+  $('#lifestyleTitle').textContent = s.lifestyleTitle;
+  $('#lifestyleHint').textContent = s.lifestyleHint;
+  $('#tourTitle').textContent = s.tourTitle;
+  $('#tourHint').textContent = s.tourHint;
   $('.quick-search').setAttribute('aria-label', s.quickTitle);
   $('#language').setAttribute('aria-label', language === 'ko' ? '언어 선택' : language === 'en' ? 'Select language' : language === 'ja' ? '言語を選択' : '选择语言');
   document.querySelectorAll('[data-quick]').forEach((button) => {
@@ -674,7 +751,10 @@ function applyLanguage() {
 
 $('#searchForm').onsubmit = (event) => {
   event.preventDefault();
-  document.querySelectorAll('[data-quick]').forEach((item) => item.classList.remove('active'));
+  document.querySelectorAll('[data-quick]').forEach((item) => {
+    item.classList.remove('active');
+    item.setAttribute('aria-pressed', 'false');
+  });
   search();
 };
 
@@ -684,8 +764,13 @@ $('#more').onclick = () => {
 };
 
 document.querySelectorAll('[data-quick]').forEach((button) => {
+  button.setAttribute('aria-pressed', 'false');
   button.onclick = () => {
-    document.querySelectorAll('[data-quick]').forEach((item) => item.classList.toggle('active', item === button));
+    document.querySelectorAll('[data-quick]').forEach((item) => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
     $('#search').value = strings[language].quick[button.dataset.quick][1];
     search(button.dataset.query);
   };
@@ -758,9 +843,14 @@ $('#locate').onclick = () => {
   const button = document.createElement('button');
   button.dataset.radius = km;
   button.className = km === radius ? 'active' : '';
+  button.setAttribute('aria-pressed', String(km === radius));
   button.onclick = () => {
     radius = km;
-    document.querySelectorAll('#radiusButtons button').forEach((item) => item.classList.toggle('active', item === button));
+    document.querySelectorAll('#radiusButtons button').forEach((item) => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
     drawRadius();
     if (lastQuery || $('#search').value.trim()) search(lastQuery || $('#search').value.trim());
   };
