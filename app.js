@@ -11,7 +11,7 @@ const strings = {
     tag: '부산 생활편의 맞춤 지도', hero: '지금 필요한 곳을<br>10초 안에 찾으세요',
     sub: '맛집 순위보다 내 상황에 맞는 화장실·주차장·약국·반려동물 동반 장소를 빠르게 찾아드려요.',
     quickTitle: '상황별 빠른 찾기', locate: '⌖ 내 위치 정보 찾기', initial: '위치를 찾은 뒤 검색어를 입력해 주세요.',
-    recommendTitle: '지금 가장 가까운 추천', recommendBadge: '거리 기준 TOP 3',
+    recommendTitle: '지금 가장 가까운 추천', recommendBadge: '거리 기준 TOP 3', touristRecommendTitle: '근처 대표 관광지 추천', touristRecommendBadge: '부산 명소 TOP 3',
     infoSmall: '장소 검색', infoTitle: '검색 결과를 선택해 주세요', infoText: '위치 확인 후 원하는 시설을 검색하세요.',
     reviewTitle: '이 장소 리뷰', name: '이름', namePlaceholder: '리뷰에 표시할 이름', rating: '별점',
     reviewPlaceholder: '이 장소에 대한 리뷰를 남겨주세요.', reviewSave: '리뷰 저장',
@@ -42,7 +42,7 @@ const strings = {
     tag: 'Busan local convenience guide', hero: 'Find what you need<br>in just 10 seconds',
     sub: 'Quickly find restrooms, parking, pharmacies, pet-friendly places and other facilities that fit your situation.',
     quickTitle: 'Quick search by situation', locate: '⌖ Use my location', initial: 'Set your location, then choose or enter a search.',
-    recommendTitle: 'Closest recommendations', recommendBadge: 'DISTANCE TOP 3',
+    recommendTitle: 'Closest recommendations', recommendBadge: 'DISTANCE TOP 3', touristRecommendTitle: 'Top attractions nearby', touristRecommendBadge: 'BUSAN HIGHLIGHTS',
     infoSmall: 'Place search', infoTitle: 'Choose a search result', infoText: 'Search for a facility and select a place.',
     reviewTitle: 'Reviews for this place', name: 'Name', namePlaceholder: 'Name shown with your review', rating: 'Rating',
     reviewPlaceholder: 'Write a review for this place.', reviewSave: 'Save review',
@@ -72,7 +72,7 @@ const strings = {
     tag: '釜山の生活便利ガイド', hero: '今必要な場所を<br>10秒で見つけよう',
     sub: 'トイレ、駐車場、薬局、ペット同伴施設など、状況に合う場所をすぐに探せます。',
     quickTitle: '目的からすぐ探す', locate: '⌖ 現在地を取得', initial: '現在地を設定して検索してください。',
-    recommendTitle: '今一番近いおすすめ', recommendBadge: '距離 TOP 3',
+    recommendTitle: '今一番近いおすすめ', recommendBadge: '距離 TOP 3', touristRecommendTitle: '近くの代表観光地', touristRecommendBadge: '釜山名所 TOP 3',
     infoSmall: '場所検索', infoTitle: '検索結果を選択', infoText: '施設を検索して場所を選んでください。',
     reviewTitle: 'この場所のレビュー', name: '名前', namePlaceholder: 'レビューに表示する名前', rating: '評価',
     reviewPlaceholder: 'この場所のレビューを書いてください。', reviewSave: 'レビューを保存',
@@ -102,7 +102,7 @@ const strings = {
     tag: '釜山生活便利指南', hero: '10秒找到<br>现在需要的地方',
     sub: '快速查找适合您的洗手间、停车场、药店、宠物友好场所及其他便利设施。',
     quickTitle: '按需求快速查找', locate: '⌖ 获取我的位置', initial: '请先设置位置，然后选择或输入搜索内容。',
-    recommendTitle: '距离最近的推荐', recommendBadge: '距离 TOP 3',
+    recommendTitle: '距离最近的推荐', recommendBadge: '距离 TOP 3', touristRecommendTitle: '附近代表景点推荐', touristRecommendBadge: '釜山景点 TOP 3',
     infoSmall: '地点搜索', infoTitle: '请选择搜索结果', infoText: '搜索设施并选择地点。',
     reviewTitle: '该地点的评论', name: '姓名', namePlaceholder: '评论中显示的姓名', rating: '评分',
     reviewPlaceholder: '请为该地点撰写评论。', reviewSave: '保存评论',
@@ -141,6 +141,14 @@ let allResults = [];
 let lastQuery = '';
 let markers = L.layerGroup().addTo(map);
 let circle = null;
+const featuredTouristNames = [
+  '해운대해수욕장', '광안리해수욕장', '감천문화마을', '태종대', '부산타워', '용두산공원',
+  '자갈치시장', '국제시장', '송도해수욕장', '흰여울문화마을', '오륙도스카이워크',
+  '동백섬', '더베이101', '해동용궁사', '송정해수욕장', '청사포다릿돌전망대',
+  '부산시민공원', '유엔기념공원', '범어사', '다대포해수욕장', '영화의전당',
+  '168계단', '초량이바구길', '차이나타운', '송상현광장', '온천천', '부산박물관',
+  '국립해양박물관', '아미산전망대', '을숙도', '아홉산숲', '금정산성'
+];
 
 const t = (key, values = {}) => {
   let value = strings[language][key] ?? strings.ko[key] ?? key;
@@ -232,6 +240,9 @@ function choose(place, focus = true) {
 function renderRecommendations() {
   const section = $('#recommendations');
   const top = allResults.slice(0, 3);
+  const touristMode = lastQuery === '관광명소';
+  $('#recommendTitle').textContent = touristMode ? t('touristRecommendTitle') : t('recommendTitle');
+  $('#recommendBadge').textContent = touristMode ? t('touristRecommendBadge') : t('recommendBadge');
   section.hidden = !top.length;
   $('#recommendationList').innerHTML = top.map((place, index) => {
     const score = Math.max(1, Math.round(100 - distance(place) / radius * 100));
@@ -281,6 +292,11 @@ async function search(queryOverride = '') {
     const response = await fetch(`/api/place-search?${params}`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || t('searchFail'));
+    const touristMode = query === '관광명소';
+    const touristPriority = (place) => {
+      const normalizedName = place.name.replace(/[\s·\-()]/g, '').toLowerCase();
+      return featuredTouristNames.some((name) => normalizedName.includes(name.replace(/[\s·\-()]/g, '').toLowerCase())) ? 1 : 0;
+    };
     allResults = (data.documents || []).map((item) => ({
       id: item.id,
       name: item.place_name,
@@ -290,7 +306,9 @@ async function search(queryOverride = '') {
       lng: Number(item.x),
       phone: item.phone
     })).filter((place) => Number.isFinite(place.lat) && distance(place) <= radius)
-      .sort((a, b) => distance(a) - distance(b));
+      .sort((a, b) => touristMode
+        ? touristPriority(b) - touristPriority(a) || distance(a) - distance(b)
+        : distance(a) - distance(b));
     expanded = false;
     renderResults();
     if (allResults[0]) choose(allResults[0], false);
