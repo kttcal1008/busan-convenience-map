@@ -315,11 +315,15 @@ function applyLanguage() {
   $('#heroTitle').innerHTML = s.hero;
   $('#heroSub').textContent = s.sub;
   $('#quickTitle').textContent = s.quickTitle;
+  $('.quick-search').setAttribute('aria-label', s.quickTitle);
+  $('#language').setAttribute('aria-label', language === 'ko' ? '언어 선택' : language === 'en' ? 'Select language' : language === 'ja' ? '言語を選択' : '选择语言');
   document.querySelectorAll('[data-quick]').forEach((button) => {
     const copy = s.quick[button.dataset.quick];
     button.querySelector('b').textContent = copy[0];
     button.querySelector('small').textContent = copy[1];
   });
+  const activeQuick = document.querySelector('[data-quick].active');
+  if (activeQuick) $('#search').value = s.quick[activeQuick.dataset.quick][1];
   $('#locate').textContent = s.locate;
   $('#recommendTitle').textContent = s.recommendTitle;
   $('#recommendBadge').textContent = s.recommendBadge;
