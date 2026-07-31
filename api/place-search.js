@@ -3,6 +3,7 @@ export default async function handler(request, response) {
   const key = process.env.KAKAO_REST_API_KEY;
   if (!key) return response.status(503).json({ error: 'KAKAO_REST_API_KEY 환경변수가 설정되지 않았습니다.' });
   const query = String(request.query.query || '').trim();
+  const touristSearch = query === '관광명소';
   const originX = Number(request.query.x);
   const originY = Number(request.query.y);
   const requestedRadius = Math.min(5000, Math.max(100, Number(request.query.radius) || 3000));
@@ -24,8 +25,11 @@ export default async function handler(request, response) {
   async function searchCell(center) {
     const places = [];
     for (let page = 1; page <= 3; page += 1) {
-      const url = new URL('https://dapi.kakao.com/v2/local/search/keyword.json');
-      url.searchParams.set('query', query);
+      const url = new URL(touristSearch
+        ? 'https://dapi.kakao.com/v2/local/search/category.json'
+        : 'https://dapi.kakao.com/v2/local/search/keyword.json');
+      if (touristSearch) url.searchParams.set('category_group_code', 'AT4');
+      else url.searchParams.set('query', query);
       url.searchParams.set('x', String(center.x));
       url.searchParams.set('y', String(center.y));
       url.searchParams.set('radius', String(cellRadius));
