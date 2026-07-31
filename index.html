@@ -9,34 +9,35 @@
 </head>
 <body>
   <div class="app">
-    <header><div class="brand">부산 <b>편의지도</b></div><form id="searchForm" class="search"><input id="search" placeholder="카페, 화장실, 주차장 등 장소를 검색하세요" autocomplete="off" /><button>검색</button></form></header>
+    <header><div class="brand">부산 <b>편의지도</b></div><form id="searchForm" class="search"><input id="search" placeholder="카페, 화장실, 주차장 등 장소를 검색하세요" autocomplete="off" /><button id="searchButton">검색</button></form><select id="language" class="language" aria-label="언어 선택"><option value="ko">한국어</option><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></header>
     <main>
       <aside>
-        <span class="service-tag">부산 생활편의 맞춤 지도</span>
-        <h1>지금 필요한 곳을<br>10초 안에 찾으세요</h1><p class="sub">맛집 순위보다 내 상황에 맞는 화장실·주차장·약국·반려동물 동반 장소를 빠르게 찾아드려요.</p>
+        <span id="serviceTag" class="service-tag">부산 생활편의 맞춤 지도</span>
+        <h1 id="heroTitle">지금 필요한 곳을<br>10초 안에 찾으세요</h1><p id="heroSub" class="sub">맛집 순위보다 내 상황에 맞는 화장실·주차장·약국·반려동물 동반 장소를 빠르게 찾아드려요.</p>
         <div class="quick-search" aria-label="상황별 빠른 찾기">
-          <b>상황별 빠른 찾기</b>
+          <b id="quickTitle">상황별 빠른 찾기</b>
           <div>
-            <button type="button" data-quick="애견동반 카페"><span>🐶</span><b>반려견과 외출</b><small>애견동반 카페</small></button>
-            <button type="button" data-quick="공중화장실"><span>🚻</span><b>급한 화장실</b><small>가까운 공중화장실</small></button>
-            <button type="button" data-quick="공영주차장"><span>🅿️</span><b>주차 먼저</b><small>주변 공영주차장</small></button>
-            <button type="button" data-quick="약국"><span>💊</span><b>약이 필요할 때</b><small>가까운 약국</small></button>
-            <button type="button" data-quick="24시 편의점"><span>🌙</span><b>늦은 시간</b><small>24시 편의점</small></button>
+            <button type="button" data-quick="pet" data-query="애견동반 카페"><span>🐶</span><b>반려견과 외출</b><small>애견동반 카페</small></button>
+            <button type="button" data-quick="toilet" data-query="공중화장실"><span>🚻</span><b>급한 화장실</b><small>가까운 공중화장실</small></button>
+            <button type="button" data-quick="parking" data-query="공영주차장"><span>🅿️</span><b>주차 먼저</b><small>주변 공영주차장</small></button>
+            <button type="button" data-quick="pharmacy" data-query="약국"><span>💊</span><b>약이 필요할 때</b><small>가까운 약국</small></button>
+            <button type="button" data-quick="night" data-query="24시 편의점"><span>🌙</span><b>늦은 시간</b><small>24시 편의점</small></button>
+            <button type="button" data-quick="tour" data-query="관광명소"><span>📸</span><b>근처 관광지 추천!</b><small>주변 관광명소</small></button>
           </div>
         </div>
         <button id="locate" class="primary">⌖ 내 위치 정보 찾기</button><p id="status" class="status">위치를 찾은 뒤 검색어를 입력해 주세요.</p>
         <section id="recommendations" class="recommendations" hidden>
-          <div class="section-title"><h2>지금 가장 가까운 추천</h2><span>거리 기준 TOP 3</span></div>
+          <div class="section-title"><h2 id="recommendTitle">지금 가장 가까운 추천</h2><span id="recommendBadge">거리 기준 TOP 3</span></div>
           <div id="recommendationList"></div>
         </section>
         <section id="info" class="info"><small>장소 검색</small><h2>검색 결과를 선택해 주세요</h2><p>위치 확인 후 원하는 시설을 검색하세요.</p></section>
         <section id="reviewBox" class="review-box" hidden>
-          <h3>이 장소 리뷰</h3>
+          <h3 id="reviewTitle">이 장소 리뷰</h3>
           <form id="reviewForm">
-            <label>이름
+            <label><span id="nameLabel">이름</span>
               <input id="reviewName" maxlength="20" placeholder="리뷰에 표시할 이름" required />
             </label>
-            <label>별점
+            <label><span id="ratingLabel">별점</span>
               <select id="reviewRating">
                 <option value="5">★★★★★ 5점</option>
                 <option value="4">★★★★☆ 4점</option>
@@ -46,15 +47,15 @@
               </select>
             </label>
             <textarea id="reviewText" maxlength="300" placeholder="이 장소에 대한 리뷰를 남겨주세요." required></textarea>
-            <button type="submit">리뷰 저장</button>
+            <button id="reviewSave" type="submit">리뷰 저장</button>
           </form>
-          <p class="review-note">작성한 리뷰는 현재 사용 중인 기기에 저장됩니다.</p>
+          <p id="reviewNote" class="review-note">작성한 리뷰는 현재 사용 중인 기기에 저장됩니다.</p>
           <div id="reviewList" class="review-list"></div>
         </section>
-        <span class="label">검색한 주변 시설</span><ul id="results" class="results"><li>검색 결과가 여기에 표시됩니다.</li></ul><button id="more" class="more" hidden></button>
+        <span id="resultsTitle" class="label">검색한 주변 시설</span><ul id="results" class="results"><li>검색 결과가 여기에 표시됩니다.</li></ul><button id="more" class="more" hidden></button>
       </aside>
-      <section class="map-wrap"><div id="map"></div><div class="map-label">📍 부산 편의시설 지도<small id="mapNote">위치 찾기 후 반경을 적용합니다</small></div>
-        <div class="radius"><b>검색 반경</b><p>선택한 거리 전체에서 시설을 찾습니다.</p><div id="radiusButtons"></div></div>
+      <section class="map-wrap"><div id="map"></div><div class="map-label"><span id="mapTitle">📍 부산 편의시설 지도</span><small id="mapNote">위치 찾기 후 반경을 적용합니다</small></div>
+        <div class="radius"><b id="radiusTitle">검색 반경</b><p id="radiusDescription">선택한 거리 전체에서 시설을 찾습니다.</p><div id="radiusButtons"></div></div>
         <section class="route"><h3 id="routeTitle">장소를 선택해 주세요</h3><p id="routeText">검색 결과의 핀을 누르면 길찾기를 이용할 수 있습니다.</p><div id="modes" class="modes"><button class="active" data-mode="walk">🚶 도보</button><button data-mode="traffic">🚌 대중교통</button><button data-mode="car">🚗 자동차</button></div><button id="routeButton" class="primary">카카오맵에서 도보 길찾기</button></section>
       </section>
     </main>
