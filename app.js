@@ -314,6 +314,12 @@ async function search(queryOverride = '') {
     if (!response.ok) throw new Error(data.error || t('searchFail'));
     const touristMode = query === '관광명소';
     const touristPriority = (place) => featuredTouristGroup(place) ? 1 : 0;
+    const touristQuality = (place) => {
+      const name = place.name;
+      if (/해수욕장|전망|공원|박물관|사찰|문화마을|스카이워크|시장|타워|광장|카페거리/.test(name)) return 2;
+      if (/둘레길|숲길|골목|맛길/.test(name)) return 0;
+      return 1;
+    };
     allResults = (data.documents || []).map((item) => ({
       id: item.id,
       name: item.place_name,
@@ -324,7 +330,7 @@ async function search(queryOverride = '') {
       phone: item.phone
     })).filter((place) => Number.isFinite(place.lat) && distance(place) <= radius)
       .sort((a, b) => touristMode
-        ? touristPriority(b) - touristPriority(a) || distance(a) - distance(b)
+        ? touristPriority(b) - touristPriority(a) || touristQuality(b) - touristQuality(a) || distance(a) - distance(b)
         : distance(a) - distance(b));
     expanded = false;
     renderResults();
