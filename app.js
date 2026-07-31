@@ -146,8 +146,8 @@ const featuredTouristNames = [
   '자갈치시장', '국제시장', '송도해수욕장', '흰여울문화마을', '오륙도스카이워크',
   '동백섬', '더베이101', '해동용궁사', '송정해수욕장', '청사포다릿돌전망대',
   '부산시민공원', '유엔기념공원', '범어사', '다대포해수욕장', '영화의전당',
-  '168계단', '초량이바구길', '차이나타운', '송상현광장', '온천천', '부산박물관',
-  '국립해양박물관', '아미산전망대', '을숙도', '아홉산숲', '금정산성'
+  '168계단', '초량이바구길', '차이나타운', '송상현광장', '황령산', '전포카페거리',
+  '부산박물관', '국립해양박물관', '아미산전망대', '을숙도', '아홉산숲', '금정산성'
 ];
 
 const t = (key, values = {}) => {
@@ -165,6 +165,10 @@ const distance = (place) => map.distance(
 const escape = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[char]));
+const normalizedPlaceName = (name) => String(name || '').replace(/[\s·\-()]/g, '').toLowerCase();
+const featuredTouristGroup = (place) => featuredTouristNames.find((name) =>
+  normalizedPlaceName(place.name).includes(normalizedPlaceName(name))
+) || '';
 
 function markerIcon(place, recommended = false) {
   const category = place.category || '';
@@ -237,10 +241,24 @@ function choose(place, focus = true) {
   if (focus) map.setView([place.lat, place.lng], 17);
 }
 
+function recommendationPlaces() {
+  const touristMode = lastQuery === '관광명소';
+  const top = [];
+  const usedTouristGroups = new Set();
+  for (const place of allResults) {
+    const group = touristMode ? featuredTouristGroup(place) || normalizedPlaceName(place.name) : '';
+    if (touristMode && usedTouristGroups.has(group)) continue;
+    if (touristMode) usedTouristGroups.add(group);
+    top.push(place);
+    if (top.length === 3) break;
+  }
+  return top;
+}
+
 function renderRecommendations() {
   const section = $('#recommendations');
-  const top = allResults.slice(0, 3);
   const touristMode = lastQuery === '관광명소';
+  const top = recommendationPlaces();
   $('#recommendTitle').textContent = touristMode ? t('touristRecommendTitle') : t('recommendTitle');
   $('#recommendBadge').textContent = touristMode ? t('touristRecommendBadge') : t('recommendBadge');
   section.hidden = !top.length;
@@ -257,15 +275,17 @@ function renderRecommendations() {
 function renderResults() {
   markers.clearLayers();
   const shown = expanded ? allResults : allResults.slice(0, 4);
+  const recommendedPlaces = new Set(recommendationPlaces());
   renderRecommendations();
   $('#results').classList.toggle('expanded', expanded);
   $('#results').innerHTML = shown.length
     ? shown.map((place, index) => `<li><button data-i="${index}"><b>📍 ${escape(place.name)}</b><b>${fmt(distance(place))}</b><small>${escape(place.category || t('infoSmall'))} · ${escape(place.address)}</small></button></li>`).join('')
     : `<li>${t('noResults')}</li>`;
-  allResults.forEach((place, index) => {
-    L.marker([place.lat, place.lng], { icon: markerIcon(place, index < 3) })
+  allResults.forEach((place) => {
+    const recommended = recommendedPlaces.has(place);
+    L.marker([place.lat, place.lng], { icon: markerIcon(place, recommended) })
       .addTo(markers)
-      .bindTooltip(`${index < 3 ? t('recommended') : ''}${place.name}`, { direction: 'top' })
+      .bindTooltip(`${recommended ? t('recommended') : ''}${place.name}`, { direction: 'top' })
       .on('click', () => choose(place, false));
   });
   document.querySelectorAll('[data-i]').forEach((button) => {
@@ -293,10 +313,7 @@ async function search(queryOverride = '') {
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || t('searchFail'));
     const touristMode = query === '관광명소';
-    const touristPriority = (place) => {
-      const normalizedName = place.name.replace(/[\s·\-()]/g, '').toLowerCase();
-      return featuredTouristNames.some((name) => normalizedName.includes(name.replace(/[\s·\-()]/g, '').toLowerCase())) ? 1 : 0;
-    };
+    const touristPriority = (place) => featuredTouristGroup(place) ? 1 : 0;
     allResults = (data.documents || []).map((item) => ({
       id: item.id,
       name: item.place_name,
