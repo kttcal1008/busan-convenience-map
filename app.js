@@ -24,7 +24,8 @@ const strings = {
     required: '장소 또는 시설명을 입력해 주세요.', searching: '카카오에서 {radius}km 반경 전체를 검색하고 있어요…',
     searchFail: '카카오 장소 검색에 실패했습니다.', success: '{origin} {radius}km 안의 카카오 장소 {count}곳을 표시했습니다.',
     myLocation: '내 위치', busanCenter: '부산 중심', placeInfo: '카카오 제공 장소 정보',
-    noAddress: '주소 정보 없음', walkingTime: '{distance} · 도보 약 {minutes}분',
+    noAddress: '주소 정보 없음', walkingTime: '{distance} · 도보 약 {minutes}분', categoryLabel: '분류',
+    addressLabel: '주소', phoneLabel: '전화', noPhone: '전화번호 정보 없음', detailButton: '📷 사진·운영시간·메뉴 자세히 보기',
     routeFrom: '{origin}에서 {distance} · {mode} 경로를 확인합니다.', noResults: '검색 결과가 없습니다.',
     more: '더보기 ({count}곳)', collapse: '접기', recommended: '추천 · ', fit: '거리 적합 {score}',
     noReviews: '아직 작성된 리뷰가 없습니다.', anonymous: '익명', unsupported: '이 브라우저는 위치 기능을 지원하지 않습니다.',
@@ -54,7 +55,8 @@ const strings = {
     radiusButton: 'Within {radius}km', required: 'Enter a place or facility.', searching: 'Searching the full {radius}km radius…',
     searchFail: 'Kakao place search failed.', success: 'Showing {count} places within {radius}km of {origin}.',
     myLocation: 'your location', busanCenter: 'central Busan', placeInfo: 'Place information from Kakao',
-    noAddress: 'Address unavailable', walkingTime: '{distance} · about {minutes} min walk',
+    noAddress: 'Address unavailable', walkingTime: '{distance} · about {minutes} min walk', categoryLabel: 'Category',
+    addressLabel: 'Address', phoneLabel: 'Phone', noPhone: 'Phone number unavailable', detailButton: '📷 View photos, hours, menus and details',
     routeFrom: 'Check the {mode} route from {origin} · {distance}.', noResults: 'No results found.',
     more: 'Show more ({count})', collapse: 'Show less', recommended: 'Recommended · ', fit: 'Distance fit {score}',
     noReviews: 'No reviews yet.', anonymous: 'Anonymous', unsupported: 'Location is not supported by this browser.',
@@ -85,6 +87,8 @@ const strings = {
     searching: '{radius}km圏内を検索しています…', searchFail: '場所検索に失敗しました。',
     success: '{origin}から{radius}km以内の{count}件を表示しています。', myLocation: '現在地', busanCenter: '釜山中心部',
     placeInfo: 'Kakao提供の場所情報', noAddress: '住所情報なし', walkingTime: '{distance} · 徒歩約{minutes}分',
+    categoryLabel: 'カテゴリー', addressLabel: '住所', phoneLabel: '電話', noPhone: '電話番号情報なし',
+    detailButton: '📷 写真・営業時間・メニューを見る',
     routeFrom: '{origin}から{distance} · {mode}ルートを確認します。', noResults: '検索結果がありません。',
     more: 'もっと見る（{count}件）', collapse: '閉じる', recommended: 'おすすめ · ', fit: '距離適合 {score}',
     noReviews: 'まだレビューがありません。', anonymous: '匿名', unsupported: 'このブラウザは位置情報に対応していません。',
@@ -115,6 +119,8 @@ const strings = {
     searching: '正在搜索{radius}公里范围…', searchFail: 'Kakao地点搜索失败。',
     success: '显示{origin}{radius}公里内的{count}个地点。', myLocation: '当前位置', busanCenter: '釜山市中心',
     placeInfo: 'Kakao提供的地点信息', noAddress: '暂无地址', walkingTime: '{distance} · 步行约{minutes}分钟',
+    categoryLabel: '分类', addressLabel: '地址', phoneLabel: '电话', noPhone: '暂无电话号码',
+    detailButton: '📷 查看照片、营业时间、菜单和详情',
     routeFrom: '从{origin}查看{distance}的{mode}路线。', noResults: '未找到结果。',
     more: '查看更多（{count}个）', collapse: '收起', recommended: '推荐 · ', fit: '距离匹配 {score}',
     noReviews: '暂无评论。', anonymous: '匿名', unsupported: '此浏览器不支持定位。',
@@ -229,7 +235,11 @@ function choose(place, focus = true) {
   selected = place;
   const km = distance(place);
   const minutes = Math.max(1, Math.round(km * 12));
-  $('#info').innerHTML = `<small>${t('placeInfo')}</small><h2>📍 ${escape(place.name)}</h2><p>${escape(place.address)}</p><p><b>${t('walkingTime', { distance: fmt(km), minutes })}</b></p>`;
+  const detailUrl = escape((place.url || '').replace(/^http:/, 'https:'));
+  const phone = place.phone
+    ? `<a href="tel:${escape(place.phone)}">${escape(place.phone)}</a>`
+    : `<span>${t('noPhone')}</span>`;
+  $('#info').innerHTML = `<small>${t('placeInfo')}</small><h2>📍 ${escape(place.name)}</h2><p class="walking-summary"><b>${t('walkingTime', { distance: fmt(km), minutes })}</b></p><dl class="place-details"><div><dt>${t('categoryLabel')}</dt><dd>${escape(place.category || t('infoSmall'))}</dd></div><div><dt>${t('addressLabel')}</dt><dd>${escape(place.address)}</dd></div><div><dt>${t('phoneLabel')}</dt><dd>${phone}</dd></div></dl>${detailUrl ? `<a class="place-detail-button" href="${detailUrl}" target="_blank" rel="noopener">${t('detailButton')}</a>` : ''}`;
   $('#routeTitle').textContent = place.name;
   $('#routeText').textContent = t('routeFrom', {
     origin: pos ? t('myLocation') : t('busanCenter'),
@@ -327,7 +337,8 @@ async function search(queryOverride = '') {
       category: item.category_name,
       lat: Number(item.y),
       lng: Number(item.x),
-      phone: item.phone
+      phone: item.phone,
+      url: item.place_url
     })).filter((place) => Number.isFinite(place.lat) && distance(place) <= radius)
       .sort((a, b) => touristMode
         ? touristPriority(b) - touristPriority(a) || touristQuality(b) - touristQuality(a) || distance(a) - distance(b)
