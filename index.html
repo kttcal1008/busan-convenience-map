@@ -31,6 +31,23 @@
           <div id="recommendationList"></div>
         </section>
         <section id="info" class="info"><small>장소 검색</small><h2>검색 결과를 선택해 주세요</h2><p>위치 확인 후 원하는 시설을 검색하세요.</p></section>
+        <section id="factsBox" class="facts-box" hidden>
+          <h3 id="factsTitle">현장 편의정보</h3>
+          <p id="factsDescription" class="facts-description">직접 확인한 편의정보를 선택해 주세요.</p>
+          <form id="factsForm">
+            <div class="fact-options">
+              <label class="fact-toggle"><input type="checkbox" name="placeFact" value="wheelchair" /><span data-fact-label="wheelchair">휠체어 출입 가능</span></label>
+              <label class="fact-toggle"><input type="checkbox" name="placeFact" value="stepFree" /><span data-fact-label="stepFree">입구 단차 없음·낮음</span></label>
+              <label class="fact-toggle"><input type="checkbox" name="placeFact" value="accessibleRestroom" /><span data-fact-label="accessibleRestroom">장애인 화장실</span></label>
+              <label class="fact-toggle"><input type="checkbox" name="placeFact" value="stroller" /><span data-fact-label="stroller">유아차 이용 가능</span></label>
+              <label class="fact-toggle"><input type="checkbox" name="placeFact" value="pet" /><span data-fact-label="pet">반려동물 동반 가능</span></label>
+              <label class="fact-toggle"><input type="checkbox" name="placeFact" value="parking" /><span data-fact-label="parking">주차 가능</span></label>
+            </div>
+            <button id="factsSave" type="submit">이 기기에 저장</button>
+          </form>
+          <p id="factsUpdated" class="facts-updated"></p>
+          <p id="factsDeviceNote" class="facts-device-note">이 정보는 현재 사용 중인 기기에만 저장됩니다.</p>
+        </section>
         <section id="reviewBox" class="review-box" hidden>
           <h3 id="reviewTitle">이 장소 리뷰</h3>
           <form id="reviewForm">
@@ -59,6 +76,20 @@
         <section class="route"><h3 id="routeTitle">장소를 선택해 주세요</h3><p id="routeText">검색 결과의 핀을 누르면 길찾기를 이용할 수 있습니다.</p><div id="modes" class="modes"><button class="active" data-mode="walk">🚶 도보</button><button data-mode="traffic">🚌 대중교통</button><button data-mode="car">🚗 자동차</button></div><button id="routeButton" class="primary">카카오맵에서 도보 길찾기</button></section>
       </section>
     </main>
+  </div>
+  <div id="roadviewModal" class="roadview-modal" role="dialog" aria-modal="true" aria-labelledby="roadviewHeading" hidden>
+    <section class="roadview-dialog">
+      <div class="roadview-header">
+        <div>
+          <span id="roadviewEyebrow">카카오 로드뷰</span>
+          <h2 id="roadviewHeading">거리에서 보기</h2>
+        </div>
+        <button id="roadviewClose" class="roadview-close" type="button" aria-label="로드뷰 닫기">×</button>
+      </div>
+      <p id="roadviewStatus" class="roadview-status" role="status" aria-live="polite"></p>
+      <div id="roadviewCanvas" class="roadview-canvas"></div>
+      <small id="roadviewNotice" class="roadview-notice">장소와 가장 가까운 촬영 지점을 표시합니다.</small>
+    </section>
   </div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="./app.js"></script>
 </body>

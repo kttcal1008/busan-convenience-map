@@ -26,6 +26,10 @@ const strings = {
     myLocation: '내 위치', busanCenter: '부산 중심', placeInfo: '카카오 제공 장소 정보',
     noAddress: '주소 정보 없음', walkingTime: '{distance} · 도보 약 {minutes}분', categoryLabel: '분류',
     addressLabel: '주소', phoneLabel: '전화', noPhone: '전화번호 정보 없음', detailButton: '📷 사진·운영시간·메뉴 자세히 보기',
+    roadviewButton: '🛣️ 거리로 보기', roadviewEyebrow: '카카오 로드뷰', roadviewTitle: '거리에서 보는 {place}',
+    roadviewClose: '로드뷰 닫기', roadviewLoading: '가장 가까운 로드뷰를 찾고 있어요…',
+    roadviewUnavailable: '이 장소 주변에는 로드뷰가 없습니다.', roadviewConfig: '로드뷰 연결을 준비 중입니다. 잠시 후 다시 시도해 주세요.',
+    roadviewError: '로드뷰를 불러오지 못했습니다.', roadviewNotice: '장소와 가장 가까운 촬영 지점을 표시합니다.',
     routeFrom: '{origin}에서 {distance} · {mode} 경로를 확인합니다.', noResults: '검색 결과가 없습니다.',
     more: '더보기 ({count}곳)', collapse: '접기', recommended: '추천 · ', fit: '거리 적합 {score}',
     noReviews: '아직 작성된 리뷰가 없습니다.', anonymous: '익명', unsupported: '이 브라우저는 위치 기능을 지원하지 않습니다.',
@@ -57,6 +61,10 @@ const strings = {
     myLocation: 'your location', busanCenter: 'central Busan', placeInfo: 'Place information from Kakao',
     noAddress: 'Address unavailable', walkingTime: '{distance} · about {minutes} min walk', categoryLabel: 'Category',
     addressLabel: 'Address', phoneLabel: 'Phone', noPhone: 'Phone number unavailable', detailButton: '📷 View photos, hours, menus and details',
+    roadviewButton: '🛣️ Street view', roadviewEyebrow: 'Kakao Roadview', roadviewTitle: 'Street view near {place}',
+    roadviewClose: 'Close street view', roadviewLoading: 'Finding the closest street view…',
+    roadviewUnavailable: 'No street view is available near this place.', roadviewConfig: 'Street view is being connected. Please try again shortly.',
+    roadviewError: 'Could not load street view.', roadviewNotice: 'Shows the closest available photographed location.',
     routeFrom: 'Check the {mode} route from {origin} · {distance}.', noResults: 'No results found.',
     more: 'Show more ({count})', collapse: 'Show less', recommended: 'Recommended · ', fit: 'Distance fit {score}',
     noReviews: 'No reviews yet.', anonymous: 'Anonymous', unsupported: 'Location is not supported by this browser.',
@@ -89,6 +97,10 @@ const strings = {
     placeInfo: 'Kakao提供の場所情報', noAddress: '住所情報なし', walkingTime: '{distance} · 徒歩約{minutes}分',
     categoryLabel: 'カテゴリー', addressLabel: '住所', phoneLabel: '電話', noPhone: '電話番号情報なし',
     detailButton: '📷 写真・営業時間・メニューを見る',
+    roadviewButton: '🛣️ ストリートビュー', roadviewEyebrow: 'Kakaoロードビュー', roadviewTitle: '{place}周辺のストリートビュー',
+    roadviewClose: 'ストリートビューを閉じる', roadviewLoading: '最も近いストリートビューを探しています…',
+    roadviewUnavailable: 'この場所の周辺にはストリートビューがありません。', roadviewConfig: 'ストリートビューを準備中です。しばらくしてからお試しください。',
+    roadviewError: 'ストリートビューを読み込めませんでした。', roadviewNotice: '場所に最も近い撮影地点を表示します。',
     routeFrom: '{origin}から{distance} · {mode}ルートを確認します。', noResults: '検索結果がありません。',
     more: 'もっと見る（{count}件）', collapse: '閉じる', recommended: 'おすすめ · ', fit: '距離適合 {score}',
     noReviews: 'まだレビューがありません。', anonymous: '匿名', unsupported: 'このブラウザは位置情報に対応していません。',
@@ -121,6 +133,10 @@ const strings = {
     placeInfo: 'Kakao提供的地点信息', noAddress: '暂无地址', walkingTime: '{distance} · 步行约{minutes}分钟',
     categoryLabel: '分类', addressLabel: '地址', phoneLabel: '电话', noPhone: '暂无电话号码',
     detailButton: '📷 查看照片、营业时间、菜单和详情',
+    roadviewButton: '🛣️ 街景查看', roadviewEyebrow: 'Kakao街景', roadviewTitle: '{place}附近的街景',
+    roadviewClose: '关闭街景', roadviewLoading: '正在查找最近的街景…',
+    roadviewUnavailable: '该地点附近暂无街景。', roadviewConfig: '街景正在连接，请稍后再试。',
+    roadviewError: '无法加载街景。', roadviewNotice: '显示距离该地点最近的拍摄位置。',
     routeFrom: '从{origin}查看{distance}的{mode}路线。', noResults: '未找到结果。',
     more: '查看更多（{count}个）', collapse: '收起', recommended: '推荐 · ', fit: '距离匹配 {score}',
     noReviews: '暂无评论。', anonymous: '匿名', unsupported: '此浏览器不支持定位。',
@@ -132,6 +148,70 @@ const strings = {
       parking: ['先找停车场', '附近公共停车场'], pharmacy: ['需要药品', '附近药店'],
       night: ['深夜使用', '24小时便利店'], tour: ['推荐附近景点！', '周边旅游景点']
     }
+  }
+};
+
+const factKeys = ['wheelchair', 'stepFree', 'accessibleRestroom', 'stroller', 'pet', 'parking'];
+const factStrings = {
+  ko: {
+    title: '현장 편의정보',
+    description: '직접 확인한 편의정보를 선택해 주세요.',
+    wheelchair: '휠체어 출입 가능',
+    stepFree: '입구 단차 없음·낮음',
+    accessibleRestroom: '장애인 화장실',
+    stroller: '유아차 이용 가능',
+    pet: '반려동물 동반 가능',
+    parking: '주차 가능',
+    save: '이 기기에 저장',
+    deviceNote: '이 정보는 현재 사용 중인 기기에만 저장됩니다.',
+    neverChecked: '아직 이 기기에서 확인하지 않았습니다.',
+    lastChecked: '마지막 확인: {date}',
+    saveFailed: '저장하지 못했습니다. 브라우저 저장 공간을 확인해 주세요.'
+  },
+  en: {
+    title: 'On-site accessibility',
+    description: 'Select the features you have personally confirmed.',
+    wheelchair: 'Wheelchair entrance',
+    stepFree: 'Step-free or low-step entrance',
+    accessibleRestroom: 'Accessible restroom',
+    stroller: 'Stroller accessible',
+    pet: 'Pets allowed',
+    parking: 'Parking available',
+    save: 'Save on this device',
+    deviceNote: 'This information is stored only on this device.',
+    neverChecked: 'Not yet checked on this device.',
+    lastChecked: 'Last checked: {date}',
+    saveFailed: 'Could not save. Check your browser storage settings.'
+  },
+  ja: {
+    title: '現地の便利情報',
+    description: '実際に確認した項目を選択してください。',
+    wheelchair: '車いすで入店可能',
+    stepFree: '入口の段差なし・低い',
+    accessibleRestroom: 'バリアフリートイレ',
+    stroller: 'ベビーカー利用可能',
+    pet: 'ペット同伴可能',
+    parking: '駐車場あり',
+    save: 'この端末に保存',
+    deviceNote: 'この情報は現在の端末にのみ保存されます。',
+    neverChecked: 'この端末ではまだ確認されていません。',
+    lastChecked: '最終確認: {date}',
+    saveFailed: '保存できませんでした。ブラウザの保存設定を確認してください。'
+  },
+  zh: {
+    title: '现场便利信息',
+    description: '请选择您亲自确认过的项目。',
+    wheelchair: '轮椅可进入',
+    stepFree: '入口无台阶或台阶较低',
+    accessibleRestroom: '无障碍卫生间',
+    stroller: '婴儿车可进入',
+    pet: '可携带宠物',
+    parking: '可停车',
+    save: '保存到此设备',
+    deviceNote: '此信息仅保存在当前设备上。',
+    neverChecked: '尚未在此设备上确认。',
+    lastChecked: '最后确认: {date}',
+    saveFailed: '无法保存，请检查浏览器存储设置。'
   }
 };
 
@@ -147,6 +227,9 @@ let allResults = [];
 let lastQuery = '';
 let markers = L.layerGroup().addTo(map);
 let circle = null;
+let roadviewSdkPromise = null;
+let roadviewInstance = null;
+let roadviewReturnFocus = null;
 const featuredTouristNames = [
   '해운대해수욕장', '광안리해수욕장', '감천문화마을', '태종대', '부산타워', '용두산공원',
   '자갈치시장', '국제시장', '송도해수욕장', '흰여울문화마을', '오륙도스카이워크',
@@ -227,11 +310,175 @@ function renderReviews(place) {
     : `<p class="empty-review">${t('noReviews')}</p>`;
 }
 
+function factText(key, values = {}) {
+  let value = factStrings[language]?.[key] ?? factStrings.ko[key] ?? key;
+  Object.entries(values).forEach(([name, replacement]) => {
+    value = value.replaceAll(`{${name}}`, replacement);
+  });
+  return value;
+}
+
+function factsKey(place) {
+  return `place-facts:${place.id || `${place.lat},${place.lng}`}`;
+}
+
+function readFacts(place) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(factsKey(place)) || 'null');
+    if (!stored || typeof stored !== 'object') return { values: {}, updatedAt: '' };
+    const values = {};
+    factKeys.forEach((key) => {
+      values[key] = stored.values?.[key] === true;
+    });
+    return {
+      values,
+      updatedAt: typeof stored.updatedAt === 'string' ? stored.updatedAt : ''
+    };
+  } catch {
+    return { values: {}, updatedAt: '' };
+  }
+}
+
+function localizedFactDate(isoDate) {
+  const date = new Date(isoDate);
+  if (Number.isNaN(date.getTime())) return '';
+  const locales = { ko: 'ko-KR', en: 'en-US', ja: 'ja-JP', zh: 'zh-CN' };
+  return new Intl.DateTimeFormat(locales[language] || 'ko-KR', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  }).format(date);
+}
+
+function applyFactLanguage() {
+  $('#factsTitle').textContent = factText('title');
+  $('#factsDescription').textContent = factText('description');
+  $('#factsSave').textContent = factText('save');
+  $('#factsDeviceNote').textContent = factText('deviceNote');
+  document.querySelectorAll('[data-fact-label]').forEach((label) => {
+    label.textContent = factText(label.dataset.factLabel);
+  });
+}
+
+function renderFacts(place) {
+  const box = $('#factsBox');
+  const stored = readFacts(place);
+  box.hidden = false;
+  box.dataset.placeKey = factsKey(place);
+  document.querySelectorAll('input[name="placeFact"]').forEach((input) => {
+    input.checked = stored.values[input.value] === true;
+  });
+  const checkedDate = localizedFactDate(stored.updatedAt);
+  $('#factsUpdated').textContent = checkedDate
+    ? factText('lastChecked', { date: checkedDate })
+    : factText('neverChecked');
+}
+
 function modeLabel(mode = routeMode) {
   return t(mode === 'walk' ? 'walk' : mode === 'traffic' ? 'traffic' : 'car');
 }
 
-function choose(place, focus = true) {
+async function ensureRoadviewSdk() {
+  if (window.kakao?.maps?.Roadview) return window.kakao.maps;
+  if (roadviewSdkPromise) return roadviewSdkPromise;
+
+  roadviewSdkPromise = (async () => {
+    const response = await fetch('/api/runtime-config');
+    const config = await response.json();
+    if (!response.ok || !config.kakaoJsKey) throw new Error('ROADVIEW_CONFIG');
+
+    await new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-kakao-roadview]');
+      const onReady = () => {
+        if (!window.kakao?.maps?.load) return reject(new Error('ROADVIEW_LOAD'));
+        window.kakao.maps.load(resolve);
+      };
+      if (existing) {
+        if (window.kakao?.maps?.load) onReady();
+        else {
+          existing.addEventListener('load', onReady, { once: true });
+          existing.addEventListener('error', () => reject(new Error('ROADVIEW_LOAD')), { once: true });
+        }
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.dataset.kakaoRoadview = 'true';
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${encodeURIComponent(config.kakaoJsKey)}&autoload=false`;
+      script.onload = onReady;
+      script.onerror = () => reject(new Error('ROADVIEW_LOAD'));
+      document.head.appendChild(script);
+    });
+    return window.kakao.maps;
+  })().catch((error) => {
+    roadviewSdkPromise = null;
+    throw error;
+  });
+
+  return roadviewSdkPromise;
+}
+
+function nearestRoadviewPano(client, position, radii = [50, 150, 300]) {
+  return new Promise((resolve) => {
+    const check = (index) => {
+      client.getNearestPanoId(position, radii[index], (panoId) => {
+        if (panoId || index === radii.length - 1) resolve(panoId || null);
+        else check(index + 1);
+      });
+    };
+    check(0);
+  });
+}
+
+function closeRoadview() {
+  const modal = $('#roadviewModal');
+  modal.hidden = true;
+  document.body.classList.remove('modal-open');
+  $('#roadviewCanvas').replaceChildren();
+  roadviewInstance = null;
+  roadviewReturnFocus?.focus?.();
+}
+
+async function openRoadview() {
+  if (!selected) return;
+  const place = selected;
+  const modal = $('#roadviewModal');
+  const canvas = $('#roadviewCanvas');
+  const status = $('#roadviewStatus');
+  roadviewReturnFocus = document.activeElement;
+  $('#roadviewHeading').textContent = t('roadviewTitle', { place: place.name });
+  $('#roadviewEyebrow').textContent = t('roadviewEyebrow');
+  $('#roadviewNotice').textContent = t('roadviewNotice');
+  $('#roadviewClose').setAttribute('aria-label', t('roadviewClose'));
+  status.textContent = t('roadviewLoading');
+  status.hidden = false;
+  canvas.hidden = true;
+  canvas.replaceChildren();
+  modal.hidden = false;
+  document.body.classList.add('modal-open');
+  $('#roadviewClose').focus();
+
+  try {
+    const kakaoMaps = await ensureRoadviewSdk();
+    if (modal.hidden || selected !== place) return;
+    const position = new kakaoMaps.LatLng(place.lat, place.lng);
+    const client = new kakaoMaps.RoadviewClient();
+    const panoId = await nearestRoadviewPano(client, position);
+    if (modal.hidden || selected !== place) return;
+    if (!panoId) {
+      status.textContent = t('roadviewUnavailable');
+      return;
+    }
+    canvas.hidden = false;
+    status.hidden = true;
+    roadviewInstance = new kakaoMaps.Roadview(canvas);
+    roadviewInstance.setPanoId(panoId, position);
+  } catch (error) {
+    status.textContent = t(error.message === 'ROADVIEW_CONFIG' ? 'roadviewConfig' : 'roadviewError');
+  }
+}
+
+function choose(place, focus = true, revealOnMobile = false) {
   selected = place;
   const km = distance(place);
   const minutes = Math.max(1, Math.round(km * 12));
@@ -239,7 +486,8 @@ function choose(place, focus = true) {
   const phone = place.phone
     ? `<a href="tel:${escape(place.phone)}">${escape(place.phone)}</a>`
     : `<span>${t('noPhone')}</span>`;
-  $('#info').innerHTML = `<small>${t('placeInfo')}</small><h2>📍 ${escape(place.name)}</h2><p class="walking-summary"><b>${t('walkingTime', { distance: fmt(km), minutes })}</b></p><dl class="place-details"><div><dt>${t('categoryLabel')}</dt><dd>${escape(place.category || t('infoSmall'))}</dd></div><div><dt>${t('addressLabel')}</dt><dd>${escape(place.address)}</dd></div><div><dt>${t('phoneLabel')}</dt><dd>${phone}</dd></div></dl>${detailUrl ? `<a class="place-detail-button" href="${detailUrl}" target="_blank" rel="noopener">${t('detailButton')}</a>` : ''}`;
+  $('#info').innerHTML = `<small>${t('placeInfo')}</small><h2>📍 ${escape(place.name)}</h2><p class="walking-summary"><b>${t('walkingTime', { distance: fmt(km), minutes })}</b></p><dl class="place-details"><div><dt>${t('categoryLabel')}</dt><dd>${escape(place.category || t('infoSmall'))}</dd></div><div><dt>${t('addressLabel')}</dt><dd>${escape(place.address)}</dd></div><div><dt>${t('phoneLabel')}</dt><dd>${phone}</dd></div></dl><div class="place-actions"><button id="roadviewButton" class="place-roadview-button" type="button">${t('roadviewButton')}</button>${detailUrl ? `<a class="place-detail-button" href="${detailUrl}" target="_blank" rel="noopener">${t('detailButton')}</a>` : ''}</div>`;
+  $('#roadviewButton').onclick = openRoadview;
   $('#routeTitle').textContent = place.name;
   $('#routeText').textContent = t('routeFrom', {
     origin: pos ? t('myLocation') : t('busanCenter'),
@@ -248,7 +496,11 @@ function choose(place, focus = true) {
   });
   $('#routeButton').textContent = t('routeButton', { mode: modeLabel() });
   renderReviews(place);
+  renderFacts(place);
   if (focus) map.setView([place.lat, place.lng], 17);
+  if (revealOnMobile && window.matchMedia('(max-width: 720px)').matches) {
+    requestAnimationFrame(() => $('#info').scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
 }
 
 function recommendationPlaces() {
@@ -296,7 +548,7 @@ function renderResults() {
     L.marker([place.lat, place.lng], { icon: markerIcon(place, recommended) })
       .addTo(markers)
       .bindTooltip(`${recommended ? t('recommended') : ''}${place.name}`, { direction: 'top' })
-      .on('click', () => choose(place, false));
+      .on('click', () => choose(place, false, true));
   });
   document.querySelectorAll('[data-i]').forEach((button) => {
     button.onclick = () => choose(shown[Number(button.dataset.i)]);
@@ -386,6 +638,11 @@ function applyLanguage() {
   $('#reviewText').placeholder = s.reviewPlaceholder;
   $('#reviewSave').textContent = s.reviewSave;
   $('#reviewNote').textContent = s.reviewNote;
+  applyFactLanguage();
+  $('#roadviewEyebrow').textContent = s.roadviewEyebrow;
+  $('#roadviewNotice').textContent = s.roadviewNotice;
+  $('#roadviewClose').setAttribute('aria-label', s.roadviewClose);
+  if (selected) $('#roadviewHeading').textContent = t('roadviewTitle', { place: selected.name });
   $('#resultsTitle').textContent = s.resultsTitle;
   $('#mapTitle').textContent = s.mapTitle;
   $('#radiusTitle').textContent = s.radiusTitle;
@@ -452,6 +709,25 @@ $('#reviewForm').onsubmit = (event) => {
   renderReviews(selected);
 };
 
+$('#factsForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (!selected) return;
+  const values = {};
+  factKeys.forEach((key) => {
+    const input = document.querySelector(`input[name="placeFact"][value="${key}"]`);
+    values[key] = Boolean(input?.checked);
+  });
+  try {
+    localStorage.setItem(factsKey(selected), JSON.stringify({
+      values,
+      updatedAt: new Date().toISOString()
+    }));
+    renderFacts(selected);
+  } catch {
+    $('#factsUpdated').textContent = factText('saveFailed');
+  }
+});
+
 $('#locate').onclick = () => {
   if (!navigator.geolocation) return showStatus(t('unsupported'));
   showStatus(t('locating'));
@@ -507,6 +783,14 @@ $('#routeButton').onclick = () => {
   const end = `${encodeURIComponent(selected.name)},${selected.lat},${selected.lng}`;
   window.open(`https://map.kakao.com/link/by/${routeMode}/${start}/${end}`, '_blank', 'noopener');
 };
+
+$('#roadviewClose').onclick = closeRoadview;
+$('#roadviewModal').onclick = (event) => {
+  if (event.target === $('#roadviewModal')) closeRoadview();
+};
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !$('#roadviewModal').hidden) closeRoadview();
+});
 
 $('#language').onchange = (event) => {
   language = event.target.value;

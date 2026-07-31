@@ -3,3 +3,200 @@
 .service-tag{display:inline-block;margin-bottom:7px;padding:5px 8px;border-radius:999px;background:#e8f1ff;color:#0757c9;font-size:10px;font-weight:800}.quick-search>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.quick-search button{display:grid;grid-template-columns:28px 1fr;grid-template-rows:auto auto;gap:1px 6px;padding:9px;border-radius:11px;text-align:left}.quick-search button>span{grid-row:1/3;align-self:center;font-size:20px}.quick-search button>b{font-size:11px;color:#23425f}.quick-search button>small{font-size:9px;color:#718399}.quick-search button.active{border-color:#1769e0;background:#e8f1ff;box-shadow:0 0 0 1px #1769e0}.quick-search button:last-child{grid-column:1/-1}.recommendations{margin:13px 0;padding:12px;border:1px solid #cfe0f7;border-radius:12px;background:#f7faff}.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.section-title h2{margin:0;font-size:13px}.section-title span{color:#1769e0;font-size:9px;font-weight:800}.recommendations button{display:grid;grid-template-columns:24px 1fr auto;align-items:center;gap:7px;width:100%;padding:8px 0;border:0;border-top:1px solid #e2eaf3;background:transparent;text-align:left;cursor:pointer}.recommendations button:first-child{border-top:0}.recommendations .rank{display:grid;width:22px;height:22px;place-items:center;border-radius:50%;background:#1769e0;color:#fff;font-size:10px;font-weight:900}.recommendations button b{display:block;color:#213a54;font-size:11px}.recommendations button small{display:block;margin-top:2px;color:#718399;font-size:9px}.recommendations button em{padding:4px 6px;border-radius:6px;background:#e8f7ed;color:#247542;font-size:9px;font-style:normal;font-weight:800}.facility.recommended{background:#1769e0;box-shadow:0 0 0 4px #1769e044,0 3px 9px #183a5577}
 .language{margin-left:auto;padding:8px 10px;border:1px solid #dce4ec;border-radius:9px;background:#fff;color:#284159;font:inherit;font-size:12px;font-weight:700;cursor:pointer}.quick-search button:last-child{grid-column:auto}@media(max-width:720px){.app{grid-template-rows:auto auto}header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px 10px;padding:8px 12px}.brand{grid-column:1;min-width:0;overflow:hidden;text-overflow:ellipsis}.language{grid-column:2;margin:0;padding:6px 7px;font-size:11px}.search{grid-column:1/-1;grid-row:2;width:100%}}
 .walking-summary{margin:7px 0 10px!important;color:#1769e0!important}.place-details{margin:0}.place-details>div{display:grid;grid-template-columns:46px 1fr;gap:7px;padding:6px 0;border-top:1px solid #e4ebf3}.place-details dt{color:#7a899a;font-size:10px;font-weight:700}.place-details dd{margin:0;color:#304860;font-size:11px;line-height:1.45;word-break:keep-all}.place-details a{color:#0757c9;text-decoration:none}.place-detail-button{display:block;margin-top:10px;padding:9px;border-radius:8px;background:#1769e0;color:#fff!important;text-align:center;text-decoration:none;font-size:11px;font-weight:800}
+
+.facts-box{margin-top:12px;padding:13px;border:1px solid #d8e5f5;border-radius:12px;background:#f8fbff}.facts-box h3{margin:0 0 4px;font-size:14px}.facts-description{margin:0 0 10px;color:#66778a;font-size:11px}.fact-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.fact-toggle{position:relative;display:flex;min-height:42px;align-items:center;gap:7px;padding:8px;border:1px solid #d6e1ed;border-radius:9px;background:#fff;color:#40566f;font-size:10px;font-weight:700;cursor:pointer}.fact-toggle input{width:17px;height:17px;margin:0;accent-color:#1769e0}.fact-toggle:has(input:checked){border-color:#1769e0;background:#e8f1ff;color:#0757c9}.facts-box form>button{width:100%;min-height:40px;margin-top:9px;border:0;border-radius:8px;background:#1769e0;color:#fff;font:inherit;font-size:11px;font-weight:800;cursor:pointer}.facts-updated,.facts-device-note{margin:7px 0 0;color:#66778a;font-size:10px;line-height:1.45}.facts-updated{color:#247542;font-weight:700}
+.place-actions{display:grid;grid-template-columns:1fr;gap:7px;margin-top:10px}.place-actions .place-detail-button{margin-top:0}.place-roadview-button{min-height:40px;padding:9px;border:1px solid #1769e0;border-radius:8px;background:#fff;color:#0757c9;font:inherit;font-size:11px;font-weight:800;cursor:pointer}
+body.modal-open{overflow:hidden}.roadview-modal{position:fixed;inset:0;z-index:3000;display:grid;place-items:center;padding:22px;background:#071728b8;backdrop-filter:blur(3px)}.roadview-modal[hidden]{display:none}.roadview-dialog{display:flex;flex-direction:column;width:min(900px,100%);height:min(690px,92vh);overflow:hidden;border-radius:18px;background:#fff;box-shadow:0 22px 70px #07172866}.roadview-header{display:flex;flex:0 0 auto;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border-bottom:1px solid #e2e9f0}.roadview-header span{display:block;margin-bottom:3px;color:#1769e0;font-size:10px;font-weight:900}.roadview-header h2{margin:0;font-size:18px}.roadview-close{display:grid;width:42px;height:42px;place-items:center;border:1px solid #d8e1eb;border-radius:50%;background:#fff;color:#344b63;font-size:25px;line-height:1;cursor:pointer}.roadview-status{display:grid;flex:1;min-height:300px;place-items:center;margin:0;padding:24px;color:#5d6f82;font-size:14px;text-align:center}.roadview-canvas{flex:1;width:100%;height:100%;min-height:300px;background:#e9eef4}.roadview-notice{flex:0 0 auto;padding:11px 18px;background:#f6f9fc;color:#68798b;font-size:10px}
+
+/* Mobile map-first layout: the map fills the first view and the content follows as a sheet. */
+@media(max-width:720px){
+  html,body{min-height:100%;height:auto}
+  body{background:#f4f7fb}
+  .app{min-height:100vh;min-height:100dvh;height:auto;display:block}
+  header{
+    position:sticky;
+    top:0;
+    z-index:1100;
+    min-height:104px;
+    padding:8px 12px 10px;
+    background:#fffffff7;
+    box-shadow:0 2px 10px #17324d14;
+    backdrop-filter:blur(10px)
+  }
+  .brand{font-size:18px}
+  .language{
+    min-width:72px;
+    min-height:44px;
+    padding:8px;
+    font-size:13px
+  }
+  .search input{
+    min-height:46px;
+    padding:11px 58px 11px 13px;
+    border-radius:12px;
+    font-size:16px
+  }
+  .search button{
+    top:1px;
+    right:1px;
+    min-width:52px;
+    min-height:44px;
+    padding:8px 10px;
+    border-radius:11px;
+    font-size:14px
+  }
+  main{
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    overflow:visible
+  }
+  .map-wrap{
+    order:-1;
+    flex:0 0 auto;
+    width:100%;
+    height:calc(100vh - 104px);
+    height:calc(100dvh - 104px);
+    min-height:430px;
+    max-height:650px;
+    overflow:hidden;
+    background:#dfe9f2
+  }
+  #map{width:100%;height:100%}
+  aside{
+    position:relative;
+    z-index:700;
+    width:100%;
+    margin-top:-24px;
+    padding:38px 18px 30px;
+    overflow:visible;
+    border:0;
+    border-radius:24px 24px 0 0;
+    background:#fff;
+    box-shadow:0 -8px 24px #17324d26
+  }
+  aside::before{
+    content:"";
+    position:absolute;
+    top:11px;
+    left:50%;
+    width:46px;
+    height:5px;
+    border-radius:999px;
+    background:#c8d2dd;
+    transform:translateX(-50%)
+  }
+
+  /* Keep map controls useful without covering most of the map. */
+  .map-label{display:none}
+  .radius{
+    top:10px;
+    right:10px;
+    bottom:auto;
+    left:60px;
+    width:auto;
+    padding:7px;
+    border-radius:11px
+  }
+  .radius>b,.radius>p{display:none}
+  #radiusButtons{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none
+  }
+  #radiusButtons::-webkit-scrollbar{display:none}
+  .radius button{
+    flex:0 0 auto;
+    width:auto;
+    min-width:68px;
+    min-height:44px;
+    margin:0;
+    padding:8px 10px;
+    border-radius:8px;
+    font-size:13px;
+    white-space:nowrap
+  }
+  .route{
+    right:10px;
+    bottom:34px;
+    width:min(330px,calc(100% - 20px));
+    padding:11px;
+    border-radius:14px
+  }
+  .route h3{margin-bottom:4px;font-size:14px}
+  .route p{
+    display:-webkit-box;
+    margin:0 0 7px;
+    overflow:hidden;
+    font-size:13px;
+    line-height:1.4;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:1
+  }
+  .modes{gap:6px;margin-bottom:7px}
+  .modes button{
+    min-height:44px;
+    padding:8px 3px;
+    font-size:13px
+  }
+  .route .primary{min-height:44px}
+
+  /* Comfortable touch targets and readable sheet content. */
+  h1{font-size:23px;line-height:1.3}
+  .service-tag{font-size:12px}
+  .sub,.status,.info p{font-size:13px}
+  .quick-search>b,.label{font-size:13px}
+  .quick-search button{
+    min-height:64px;
+    padding:10px;
+    font-size:13px
+  }
+  .quick-search button>b{font-size:13px}
+  .quick-search button>small{font-size:12px;line-height:1.35}
+  .primary,.more{min-height:46px;font-size:14px}
+  .info{padding:15px}
+  .info small{font-size:13px}
+  .info h2{font-size:17px}
+  .review-box{padding:15px}
+  .review-box h3{font-size:16px}
+  .review-box label{font-size:13px}
+  .review-box input,.review-box select,.review-box textarea{
+    min-height:44px;
+    padding:10px;
+    font-size:16px
+  }
+  .review-box form>button{min-height:44px;font-size:14px}
+  .review-note,.empty-review,.review-list article small{font-size:12px}
+  .review-list article p,.review-list article b{font-size:13px}
+  .results li{padding:6px 0;font-size:13px}
+  .results button{min-height:44px;padding:8px 0}
+  .results small{font-size:12px;line-height:1.4}
+  .recommendations button{min-height:52px}
+  .recommendations button b{font-size:13px}
+  .recommendations button small,.recommendations button em{font-size:12px}
+  .section-title h2{font-size:14px}
+  .section-title span{font-size:11px}
+  .place-details dt{font-size:12px}
+  .place-details dd{font-size:13px}
+  .place-detail-button{
+    min-height:44px;
+    padding:12px;
+    font-size:13px
+  }
+}
+
+@media(max-width:720px){
+  .facts-box{padding:15px}
+  .facts-box h3{font-size:16px}
+  .facts-description,.facts-updated,.facts-device-note{font-size:12px}
+  .fact-toggle{min-height:48px;padding:10px;font-size:12px}
+  .facts-box form>button,.place-roadview-button{min-height:44px;font-size:13px}
+  .roadview-modal{align-items:end;padding:0}
+  .roadview-dialog{width:100%;height:min(78vh,680px);border-radius:22px 22px 0 0}
+  .roadview-header{padding:13px 14px}
+  .roadview-header h2{font-size:17px}
+  .roadview-status,.roadview-canvas{min-height:280px}
+  .roadview-notice{padding:10px 14px;font-size:11px}
+}
