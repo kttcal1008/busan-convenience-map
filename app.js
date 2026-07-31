@@ -167,70 +167,6 @@ const strings = {
   }
 };
 
-const factKeys = ['wheelchair', 'stepFree', 'accessibleRestroom', 'stroller', 'pet', 'parking'];
-const factStrings = {
-  ko: {
-    title: '현장 편의정보',
-    description: '직접 확인한 편의정보를 선택해 주세요.',
-    wheelchair: '휠체어 출입 가능',
-    stepFree: '입구 단차 없음·낮음',
-    accessibleRestroom: '장애인 화장실',
-    stroller: '유아차 이용 가능',
-    pet: '반려동물 동반 가능',
-    parking: '주차 가능',
-    save: '이 기기에 저장',
-    deviceNote: '이 정보는 현재 사용 중인 기기에만 저장됩니다.',
-    neverChecked: '아직 이 기기에서 확인하지 않았습니다.',
-    lastChecked: '마지막 확인: {date}',
-    saveFailed: '저장하지 못했습니다. 브라우저 저장 공간을 확인해 주세요.'
-  },
-  en: {
-    title: 'On-site accessibility',
-    description: 'Select the features you have personally confirmed.',
-    wheelchair: 'Wheelchair entrance',
-    stepFree: 'Step-free or low-step entrance',
-    accessibleRestroom: 'Accessible restroom',
-    stroller: 'Stroller accessible',
-    pet: 'Pets allowed',
-    parking: 'Parking available',
-    save: 'Save on this device',
-    deviceNote: 'This information is stored only on this device.',
-    neverChecked: 'Not yet checked on this device.',
-    lastChecked: 'Last checked: {date}',
-    saveFailed: 'Could not save. Check your browser storage settings.'
-  },
-  ja: {
-    title: '現地の便利情報',
-    description: '実際に確認した項目を選択してください。',
-    wheelchair: '車いすで入店可能',
-    stepFree: '入口の段差なし・低い',
-    accessibleRestroom: 'バリアフリートイレ',
-    stroller: 'ベビーカー利用可能',
-    pet: 'ペット同伴可能',
-    parking: '駐車場あり',
-    save: 'この端末に保存',
-    deviceNote: 'この情報は現在の端末にのみ保存されます。',
-    neverChecked: 'この端末ではまだ確認されていません。',
-    lastChecked: '最終確認: {date}',
-    saveFailed: '保存できませんでした。ブラウザの保存設定を確認してください。'
-  },
-  zh: {
-    title: '现场便利信息',
-    description: '请选择您亲自确认过的项目。',
-    wheelchair: '轮椅可进入',
-    stepFree: '入口无台阶或台阶较低',
-    accessibleRestroom: '无障碍卫生间',
-    stroller: '婴儿车可进入',
-    pet: '可携带宠物',
-    parking: '可停车',
-    save: '保存到此设备',
-    deviceNote: '此信息仅保存在当前设备上。',
-    neverChecked: '尚未在此设备上确认。',
-    lastChecked: '最后确认: {date}',
-    saveFailed: '无法保存，请检查浏览器存储设置。'
-  }
-};
-
 let language = localStorage.getItem('busan-map-language') || (navigator.language || 'ko').slice(0, 2);
 if (!strings[language]) language = 'ko';
 let pos = null;
@@ -327,70 +263,6 @@ function renderReviews(place) {
   $('#reviewList').innerHTML = reviews.length
     ? reviews.map((review) => `<article><strong>${escape(review.name || t('anonymous'))}</strong><b>${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</b><p>${escape(review.text)}</p><small>${escape(review.date)}</small></article>`).join('')
     : `<p class="empty-review">${t('noReviews')}</p>`;
-}
-
-function factText(key, values = {}) {
-  let value = factStrings[language]?.[key] ?? factStrings.ko[key] ?? key;
-  Object.entries(values).forEach(([name, replacement]) => {
-    value = value.replaceAll(`{${name}}`, replacement);
-  });
-  return value;
-}
-
-function factsKey(place) {
-  return `place-facts:${place.id || `${place.lat},${place.lng}`}`;
-}
-
-function readFacts(place) {
-  try {
-    const stored = JSON.parse(localStorage.getItem(factsKey(place)) || 'null');
-    if (!stored || typeof stored !== 'object') return { values: {}, updatedAt: '' };
-    const values = {};
-    factKeys.forEach((key) => {
-      values[key] = stored.values?.[key] === true;
-    });
-    return {
-      values,
-      updatedAt: typeof stored.updatedAt === 'string' ? stored.updatedAt : ''
-    };
-  } catch {
-    return { values: {}, updatedAt: '' };
-  }
-}
-
-function localizedFactDate(isoDate) {
-  const date = new Date(isoDate);
-  if (Number.isNaN(date.getTime())) return '';
-  const locales = { ko: 'ko-KR', en: 'en-US', ja: 'ja-JP', zh: 'zh-CN' };
-  return new Intl.DateTimeFormat(locales[language] || 'ko-KR', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  }).format(date);
-}
-
-function applyFactLanguage() {
-  $('#factsTitle').textContent = factText('title');
-  $('#factsDescription').textContent = factText('description');
-  $('#factsSave').textContent = factText('save');
-  $('#factsDeviceNote').textContent = factText('deviceNote');
-  document.querySelectorAll('[data-fact-label]').forEach((label) => {
-    label.textContent = factText(label.dataset.factLabel);
-  });
-}
-
-function renderFacts(place) {
-  const box = $('#factsBox');
-  const stored = readFacts(place);
-  box.hidden = false;
-  box.dataset.placeKey = factsKey(place);
-  document.querySelectorAll('input[name="placeFact"]').forEach((input) => {
-    input.checked = stored.values[input.value] === true;
-  });
-  const checkedDate = localizedFactDate(stored.updatedAt);
-  $('#factsUpdated').textContent = checkedDate
-    ? factText('lastChecked', { date: checkedDate })
-    : factText('neverChecked');
 }
 
 function modeLabel(mode = routeMode) {
@@ -568,7 +440,6 @@ function choose(place, focus = true, revealOnMobile = false) {
   });
   $('#routeButton').textContent = t('routeButton', { mode: modeLabel() });
   renderReviews(place);
-  renderFacts(place);
   if (focus) map.setView([place.lat, place.lng], 17);
   if (revealOnMobile && window.matchMedia('(max-width: 720px)').matches) {
     requestAnimationFrame(() => $('#info').scrollIntoView({ behavior: 'smooth', block: 'start' }));
@@ -715,7 +586,6 @@ function applyLanguage() {
   $('#reviewText').placeholder = s.reviewPlaceholder;
   $('#reviewSave').textContent = s.reviewSave;
   $('#reviewNote').textContent = s.reviewNote;
-  applyFactLanguage();
   $('#roadviewEyebrow').textContent = s.roadviewEyebrow;
   $('#roadviewNotice').textContent = s.roadviewNotice;
   $('#roadviewClose').setAttribute('aria-label', s.roadviewClose);
@@ -793,25 +663,6 @@ $('#reviewForm').onsubmit = (event) => {
   $('#reviewText').value = '';
   renderReviews(selected);
 };
-
-$('#factsForm').addEventListener('submit', (event) => {
-  event.preventDefault();
-  if (!selected) return;
-  const values = {};
-  factKeys.forEach((key) => {
-    const input = document.querySelector(`input[name="placeFact"][value="${key}"]`);
-    values[key] = Boolean(input?.checked);
-  });
-  try {
-    localStorage.setItem(factsKey(selected), JSON.stringify({
-      values,
-      updatedAt: new Date().toISOString()
-    }));
-    renderFacts(selected);
-  } catch {
-    $('#factsUpdated').textContent = factText('saveFailed');
-  }
-});
 
 $('#locate').onclick = () => {
   if (!navigator.geolocation) return showStatus(t('unsupported'));
