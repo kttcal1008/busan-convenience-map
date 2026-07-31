@@ -1,9 +1,17 @@
 const $ = (selector) => document.querySelector(selector);
-const map = L.map('map').setView([35.1796, 129.0756], 13);
+const map = L.map('map', {
+  preferCanvas: true,
+  fadeAnimation: false,
+  markerZoomAnimation: false
+}).setView([35.1796, 129.0756], 13);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
+  updateWhenIdle: true,
+  updateWhenZooming: false,
+  keepBuffer: 3,
   attribution: '© OpenStreetMap'
 }).addTo(map);
+const resultCanvasRenderer = L.canvas({ padding: 0.5, tolerance: 10 });
 
 const strings = {
   ko: {
@@ -178,7 +186,8 @@ let expanded = false;
 let allResults = [];
 let lastQuery = '';
 let markers = L.layerGroup().addTo(map);
-let markerByPlaceKey = new Map();
+let resultLayerByPlaceKey = new Map();
+let renderedSelectionKey = '';
 let circle = null;
 let roadviewSdkPromise = null;
 let roadviewInstance = null;
@@ -214,15 +223,23 @@ const featuredTouristGroup = (place) => featuredTouristNames.find((name) =>
   normalizedPlaceName(place.name).includes(normalizedPlaceName(name))
 ) || '';
 
-function markerIcon(place, recommended = false, isSelected = false) {
-  const category = place.category || '';
-  const emoji = category.includes('관광명소') ? '📸' : category.includes('카페') ? '☕' : '📍';
-  return L.divIcon({
-    className: '',
-    html: `<div class="facility${recommended ? ' recommended' : ''}${isSelected ? ' selected' : ''}"><span>${emoji}</span></div>`,
-    iconSize: [34, 34],
-    iconAnchor: [17, 34]
-  });
+function resultMarkerAppearance(recommended = false, isSelected = false) {
+  if (isSelected) {
+    return {
+      radius: 11,
+      style: { color: '#ffffff', weight: 4, fillColor: '#0757c9', fillOpacity: 1, opacity: 1 }
+    };
+  }
+  if (recommended) {
+    return {
+      radius: 8,
+      style: { color: '#0757c9', weight: 3, fillColor: '#5ba3ff', fillOpacity: 0.96, opacity: 1 }
+    };
+  }
+  return {
+    radius: 6,
+    style: { color: '#ffffff', weight: 2, fillColor: '#f3a000', fillOpacity: 0.9, opacity: 1 }
+  };
 }
 
 function showStatus(message, ok = false) {
@@ -410,11 +427,18 @@ function syncSelectionUi(ensureVisible = false) {
     if (current) button.setAttribute('aria-current', 'true');
     else button.removeAttribute('aria-current');
   });
-  markerByPlaceKey.forEach(({ marker, place, recommended }) => {
-    const current = isSelectedPlace(place);
-    marker.setIcon(markerIcon(place, recommended, current));
-    marker.setZIndexOffset(current ? 1000 : recommended ? 500 : 0);
+  new Set([renderedSelectionKey, currentKey]).forEach((key) => {
+    const entry = resultLayerByPlaceKey.get(key);
+    if (!entry) return;
+    const { layer, recommended } = entry;
+    const current = key === currentKey;
+    const appearance = resultMarkerAppearance(recommended, current);
+    layer.setStyle(appearance.style);
+    layer.setRadius(appearance.radius);
+    if (recommended && !current) layer.bringToFront();
   });
+  resultLayerByPlaceKey.get(currentKey)?.layer.bringToFront();
+  renderedSelectionKey = currentKey;
   const selectedButton = resultButtons.find((button) => button.dataset.placeKey === currentKey);
   if (ensureVisible && selectedButton && !window.matchMedia('(max-width: 720px)').matches) {
     selectedButton.scrollIntoView({ block: 'nearest' });
@@ -479,21 +503,29 @@ function renderRecommendations() {
 
 function renderResults() {
   markers.clearLayers();
-  markerByPlaceKey.clear();
+  resultLayerByPlaceKey.clear();
   const recommendedPlaces = new Set(recommendationPlaces());
   renderRecommendations();
   renderResultList();
   allResults.forEach((place) => {
     const recommended = recommendedPlaces.has(place);
-    const marker = L.marker([place.lat, place.lng], {
-      icon: markerIcon(place, recommended, isSelectedPlace(place)),
-      zIndexOffset: isSelectedPlace(place) ? 1000 : recommended ? 500 : 0
+    const appearance = resultMarkerAppearance(recommended, isSelectedPlace(place));
+    const layer = L.circleMarker([place.lat, place.lng], {
+      renderer: resultCanvasRenderer,
+      radius: appearance.radius,
+      ...appearance.style
     })
       .addTo(markers)
       .bindTooltip(`${recommended ? t('recommended') : ''}${place.name}`, { direction: 'top' })
       .on('click', () => choose(place, false, true));
-    markerByPlaceKey.set(placeKey(place), { marker, place, recommended });
+    resultLayerByPlaceKey.set(placeKey(place), { layer, place, recommended });
   });
+  recommendedPlaces.forEach((place) => {
+    resultLayerByPlaceKey.get(placeKey(place))?.layer.bringToFront();
+  });
+  const selectedKey = selected ? placeKey(selected) : '';
+  resultLayerByPlaceKey.get(selectedKey)?.layer.bringToFront();
+  renderedSelectionKey = resultLayerByPlaceKey.has(selectedKey) ? selectedKey : '';
   $('#more').hidden = allResults.length <= 4;
   $('#more').textContent = expanded ? t('collapse') : t('more', { count: allResults.length - 4 });
 }
@@ -630,7 +662,8 @@ $('#searchForm').onsubmit = (event) => {
 
 $('#more').onclick = () => {
   expanded = !expanded;
-  renderResults();
+  renderResultList();
+  $('#more').textContent = expanded ? t('collapse') : t('more', { count: allResults.length - 4 });
 };
 
 document.querySelectorAll('[data-quick]').forEach((button) => {
